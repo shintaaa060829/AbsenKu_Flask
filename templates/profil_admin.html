@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Profil Administrator{% endblock %}
+{% block content %}
+<section class="page-title">
+  <div><span class="eyebrow">PENGATURAN AKUN</span>
+    <h1>Profil Administrator</h1>
+    <p>Perbarui identitas akun dan password administrator.</p>
+  </div>
+</section>
+<section class="panel narrow">
+  <h2>Informasi Akun</h2>
+  <form method="post" class="form-grid one">
+    <label>Nama administrator<input name="nama" required value="{{ admin.nama }}"></label>
+    <label>Username<input name="username" required value="{{ admin.username }}" autocomplete="username"></label>
+    <hr>
+    <p class="help span2">Untuk menyimpan perubahan, masukkan password lama. Password baru boleh dikosongkan jika tidak
+      ingin menggantinya.</p>
+    <label>Password lama<input type="password" name="password_lama" required autocomplete="current-password"></label>
+    <label>Password baru<input type="password" name="password_baru" minlength="8" autocomplete="new-password"
+        placeholder="Minimal 8 karakter"></label>
+    <button class="btn primary full" type="submit">Simpan Profil</button>
+  </form>
+</section>
+{% endblock %}

@@ -1,0 +1,7 @@
+absensi.db
+*.db
+.env
+venv/
+.venv/
+__pycache__/
+update_admin.py

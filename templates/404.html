@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}Halaman Tidak Ditemukan{% endblock %}
+{% block content %}<section class="panel narrow">
+    <h1>Halaman tidak ditemukan</h1>
+    <p>Alamat yang kamu buka tidak tersedia.</p><a class="btn primary" href="{{ url_for('absen_public') }}">Kembali ke
+        halaman absensi</a>
+</section>{% endblock %}

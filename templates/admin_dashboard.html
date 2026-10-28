@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Dashboard Admin{% endblock %}
+{% block content %}
+<section class="hero">
+  <div><span class="eyebrow">PANEL ADMINISTRATOR</span>
+    <h1>Dashboard</h1>
+    <p>Kelola data siswa dan absensi sekolah dari satu tempat.</p>
+  </div>
+  <a class="btn light" href="{{ url_for('data_siswa') }}">＋ Tambah / Kelola Siswa</a>
+</section>
+<section class="stats">
+  <article class="stat"><span class="stat-icon purple">♟</span>
+    <div><b>{{ total_siswa }}</b><small>Total siswa</small></div>
+  </article>
+  <article class="stat"><span class="stat-icon green">▦</span>
+    <div><b>{{ total_kelas }}</b><small>Total kelas</small></div>
+  </article>
+  <article class="stat"><span class="stat-icon orange">✓</span>
+    <div><b>{{ hadir_hari_ini }}</b><small>Hadir hari ini</small></div>
+  </article>
+</section>
+<section class="panel">
+  <div class="section-head">
+    <div>
+      <h2>Aktivitas Absensi Terbaru</h2>
+      <p>Data ini hanya dapat dilihat administrator.</p>
+    </div><a class="btn primary" href="{{ url_for('absensi_harian') }}">Lihat Absensi</a>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Tanggal</th>
+          <th>NIS</th>
+          <th>Nama Siswa</th>
+          <th>Kelas</th>
+          <th>Status</th>
+          <th>Waktu</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in recent %}<tr>
+          <td>{{ r.tanggal }}</td>
+          <td>{{ r.nis }}</td>
+          <td>{{ r.nama }}</td>
+          <td>{{ r.kelas }}</td>
+          <td><span class="badge {{ r.status|lower }}">{{ r.status }}</span></td>
+          <td>{{ r.waktu }}</td>
+        </tr>
+        {% else %}<tr>
+          <td colspan="6" class="empty">Belum ada data absensi.</td>
+        </tr>{% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

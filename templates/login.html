@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Login Administrator{% endblock %}
+{% block content %}
+<section class="panel narrow login-panel">
+  <div class="login-symbol">🔐</div>
+  <h1>Login Administrator</h1>
+  <p class="muted">Masuk untuk mengelola data siswa dan absensi.</p>
+  <form method="post" class="form-grid one">
+    <label>Username<input name="username" required autocomplete="username" placeholder="Username admin"></label>
+    <label>Password<input type="password" name="password" required autocomplete="current-password"
+        placeholder="Password admin"></label>
+    <button class="btn primary full" type="submit">Login</button>
+  </form>
+  <p class="help">Akun awal: <b>admin</b> · Password: <b>AbsenKu123!</b>. Segera ubah melalui Profil Admin.</p>
+</section>
+{% endblock %}

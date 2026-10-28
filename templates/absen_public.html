@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Isi Absensi{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div>
+    <span class="eyebrow">ABSENSI SISWA</span>
+    <h1>Selamat datang!</h1>
+    <p>Isi kehadiranmu dengan memasukkan nama dan memilih status kehadiran.</p>
+  </div>
+  <div class="hero-mark">✓</div>
+</section>
+
+<section class="panel narrow">
+  <h2>Form Absensi</h2>
+  <p class="muted">Tanggal hari ini: <b>{{ today }}</b></p>
+
+  <form method="post" action="{{ url_for('absen_public') }}" class="form-grid one">
+    <label>Nama siswa
+      <input type="text" name="nama" required placeholder="Masukkan nama lengkap kamu">
+    </label>
+
+    <label>Status kehadiran
+      <select name="status" required>
+        <option value="">-- Pilih status --</option>
+        <option value="Hadir">Hadir</option>
+        <option value="Izin">Izin</option>
+        <option value="Sakit">Sakit</option>
+        <option value="Alpa">Alpa</option>
+      </select>
+    </label>
+
+    <button class="btn primary full" type="submit">Kirim Absensi</button>
+  </form>
+
+  <p class="help">
+    Masukkan nama lengkap sesuai data yang terdaftar.
+    Data siswa dan rekap hanya bisa diakses administrator.
+  </p>
+</section>
+{% endblock %}

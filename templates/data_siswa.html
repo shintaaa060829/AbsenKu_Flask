@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Data Siswa{% endblock %}
+{% block content %}
+<section class="page-title">
+  <div><span class="eyebrow">ADMINISTRATOR</span>
+    <h1>Data Siswa</h1>
+    <p>Tambah, cari, edit, dan hapus data siswa.</p>
+  </div><button class="btn primary" type="button" data-open="modalTambah">＋ Tambah Siswa</button>
+</section>
+<section class="panel">
+  <form class="search-row" method="get"><input name="cari" value="{{ cari }}"
+      placeholder="Cari nama, NIS, atau kelas..."><button class="btn secondary">Cari</button>{% if cari %}<a
+      class="btn ghost" href="{{ url_for('data_siswa') }}">Reset</a>{% endif %}</form>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>NIS</th>
+          <th>Nama Siswa</th>
+          <th>Kelas</th>
+          <th>Jurusan</th>
+          <th>Alamat</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for s in siswa %}<tr>
+          <td>{{ loop.index }}</td>
+          <td>{{ s.nis }}</td>
+          <td><b>{{ s.nama }}</b></td>
+          <td>{{ s.kelas }}</td>
+          <td>{{ s.jurusan }}</td>
+          <td>{{ s.alamat or '-' }}</td>
+          <td class="actions">
+            <button class="btn tiny secondary" type="button" data-open="modalEdit{{ s.id }}">Edit</button>
+            <form method="post" action="{{ url_for('hapus_siswa', siswa_id=s.id) }}"
+              onsubmit="return confirm('Hapus data siswa ini beserta riwayat absensinya?')"><button
+                class="btn tiny danger" type="submit">Hapus</button></form>
+          </td>
+        </tr>
+        <dialog id="modalEdit{{ s.id }}" class="dialog">
+          <form method="post" action="{{ url_for('edit_siswa', siswa_id=s.id) }}" class="form-grid">
+            <h2 class="span2">Edit Data Siswa</h2>
+            <label>NIS<input name="nis" required value="{{ s.nis }}"></label><label>Nama lengkap<input name="nama"
+                required value="{{ s.nama }}"></label>
+            <label>Kelas<input name="kelas" required value="{{ s.kelas }}"></label><label>Jurusan<input name="jurusan"
+                value="{{ s.jurusan }}"></label>
+            <label class="span2">Alamat<input name="alamat" value="{{ s.alamat }}"></label>
+            <div class="form-actions span2"><button type="button" class="btn ghost"
+                data-close="modalEdit{{ s.id }}">Batal</button><button class="btn primary">Simpan Perubahan</button>
+            </div>
+          </form>
+        </dialog>
+        {% else %}<tr>
+          <td colspan="7" class="empty">Belum ada siswa. Klik “Tambah Siswa” untuk memulai.</td>
+        </tr>{% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+<dialog id="modalTambah" class="dialog">
+  <form method="post" action="{{ url_for('tambah_siswa') }}" class="form-grid">
+    <h2 class="span2">Tambah Siswa</h2>
+    <label>NIS<input name="nis" required maxlength="20" placeholder="Contoh: 2024001"></label>
+    <label>Nama lengkap<input name="nama" required placeholder="Nama siswa"></label>
+    <label>Kelas<input name="kelas" required placeholder="Contoh: XII RPL 1"></label>
+    <label>Jurusan<input name="jurusan" placeholder="Contoh: RPL"></label>
+    <label class="span2">Alamat<input name="alamat" placeholder="Alamat siswa"></label>
+    <div class="form-actions span2"><button type="button" class="btn ghost"
+        data-close="modalTambah">Batal</button><button class="btn primary" type="submit">Simpan Data</button></div>
+  </form>
+</dialog>
+{% endblock %}

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}AbsenKu{% endblock %} | AbsenKu</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+  <header class="topbar">
+    <a class="brand" href="{{ url_for('absen_public') }}"><span
+        class="brand-icon">A</span><span><b>AbsenKu</b><small>Student Attendance</small></span></a>
+    <nav>
+      <a href="{{ url_for('absen_public') }}">Isi Absensi</a>
+      {% if session.get('admin_id') %}
+      <a href="{{ url_for('admin_dashboard') }}">Dashboard Admin</a>
+      <a href="{{ url_for('data_siswa') }}">Data Siswa</a>
+      <a href="{{ url_for('absensi_harian') }}">Absensi Harian</a>
+      <a href="{{ url_for('profil_admin') }}">Profil Admin</a>
+      <form class="inline" method="post" action="{{ url_for('logout') }}"><button class="nav-logout"
+          type="submit">Logout</button></form>
+      {% else %}
+      <a href="{{ url_for('login') }}">Login Admin</a>
+      {% endif %}
+    </nav>
+  </header>
+  <main class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="flashes">
+      {% for category, message in messages %}<div class="alert {{ category }}">{{ message }}</div>{% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+  <footer>© {{ now_year if now_year is defined else 2026 }} AbsenKu · Sistem Absensi Siswa</footer>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>

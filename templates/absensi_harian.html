@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Absensi Harian{% endblock %}
+{% block content %}
+<section class="page-title">
+  <div><span class="eyebrow">ADMINISTRATOR</span>
+    <h1>Absensi Harian</h1>
+    <p>Lihat dan perbarui status kehadiran siswa.</p>
+  </div>
+</section>
+<section class="panel">
+  <form method="get" class="search-row">
+    <label class="date-label">Tanggal<input type="date" name="tanggal" value="{{ tanggal }}"></label>
+    <input name="cari" value="{{ cari }}" placeholder="Cari nama, NIS, atau kelas...">
+    <button class="btn primary">Tampilkan</button>
+  </form>
+  <form method="post" action="{{ url_for('absensi_harian') }}">
+    <input type="hidden" name="tanggal" value="{{ tanggal }}">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>NIS</th>
+            <th>Nama Siswa</th>
+            <th>Kelas</th>
+            <th>Status Kehadiran</th>
+            <th>Waktu</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for s in rows %}<tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ s.nis }}</td>
+            <td><b>{{ s.nama }}</b></td>
+            <td>{{ s.kelas }}</td>
+            <td><select class="status-select" name="status_{{ s.id }}">
+                <option value="">Belum diisi</option>{% for st in ['Hadir','Izin','Sakit','Alpa'] %}<option
+                  value="{{ st }}" {% if s.status==st %}selected{% endif %}>{{ st }}</option>{% endfor %}
+              </select></td>
+            <td>{{ s.waktu or '-' }}</td>
+          </tr>
+          {% else %}<tr>
+            <td colspan="6" class="empty">Belum ada siswa yang terdaftar.</td>
+          </tr>{% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="form-actions"><button class="btn primary" type="submit">Simpan Absensi</button></div>
+  </form>
+</section>
+{% endblock %}
